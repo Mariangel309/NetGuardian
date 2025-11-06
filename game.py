@@ -76,21 +76,23 @@ class Game:
         self.vida_img = self.load_ui('data/images/souls/corazon.png', (24, 24)) #buscar asset de icono de vida
         self.enemy_icon = self.load_ui('data/images/ui/enemy_icon.png', (24, 24)) #buscar asset de icono de enemigo
 
-        # Jugador
+        
         self.selected_skin = "player"
         self.player = Player(self, (50, 50), (8, 15), skin=self.selected_skin)
         
-        # Mapa
+        
         self.tilemap = Tilemap(self, tile_size=16)
         self.level = 0
-        self.load_level(self.level)
         
-        # Efectos
+        
         self.screenshake = 0
-
-                # Sistemas nuevos
         self.tutorial = TutorialSystem(self)
+        
         self.sistema_logs = SistemaLogsVisual(self)
+        
+        
+        self.load_level(self.level)
+
     
     def load_ui(self, path, size):
         try:
@@ -144,9 +146,9 @@ class Game:
             assets['gun'] = load_image('gun.png')
             assets['projectile'] = load_image('projectile.png')
 
-            print("✅ Assets cargados")
+            print("Assets cargados")
         except Exception as e:
-            print(f"⚠️ Error cargando assets: {e}")
+            print(f"Error cargando assets: {e}")
         
         return assets
     

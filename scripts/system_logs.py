@@ -68,7 +68,7 @@ class SistemaLogsVisual:
         self.game = game
         self.lista_logs = ListaEnlazadaLogs(max_size=5)
         try:
-            self.font = pygame.font.Font('data/Fonts/pixel_font.ttf', 8)
+            self.font = pygame.font.Font('data/fonts/pixel_font.ttf', 8)
         except:
             self.font = pygame.font.Font(None, 12)
         
