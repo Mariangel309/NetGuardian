@@ -94,10 +94,11 @@ LEVEL_OBJECTIVES = {
             '1. Aprende los controles basicos',
             '2. Recolecta 1 firewall (recurso)',
             '3. Habla con los NPCs (tecla E)',
-            '4. Usa tu sonda remota (flecha abajo)',
-            '5. Alcanza el puerto seguro'
+            '4. Completa el puzzle del terminal',
+            '5. Completa el mini-juego de filtrado',
+            '6. Alcanza el puerto seguro'
         ],
-        'concept': 'CONCEPTO: Los firewalls son barreras de seguridad\nque protegen redes de accesos no autorizados.'
+        'concept': 'CONCEPTO: Los firewalls son barreras de seguridad\nque protegen redes de accesos no autorizados.\nDebes completar AMBOS desafios para avanzar.'
     },
     'level_2': {
         'title': 'SECTOR 2: TRAFICO MALICIOSO',
@@ -650,16 +651,24 @@ class NPC:
 
 # ============= SISTEMA DE PUZZLES =============
 class CyberPuzzle:
-    def __init__(self, x, y, puzzle_type, correct_answer, question):
+    def __init__(self, x, y, puzzle_type, correct_answer, question, hints=None, is_sequence=False):
         self.pos = [x, y]
         self.puzzle_type = puzzle_type
         self.correct_answer = correct_answer
         self.question = question
+        self.hints = hints or []
+        self.is_sequence = is_sequence
         self.active = False
         self.solved = False
         self.user_input = ""
         self.message = ""
         self.message_timer = 0
+        self.attempts = 0
+        self.max_attempts = 5
+        
+        if is_sequence:
+            self.sequence_answers = correct_answer.split(',')
+            self.current_step = 0
     
     def can_activate(self, player_pos):
         distance = math.sqrt((self.pos[0] - player_pos[0])**2 + (self.pos[1] - player_pos[1])**2)
@@ -669,15 +678,59 @@ class CyberPuzzle:
         self.active = True
         return self.question
     
+    def get_current_hint(self):
+        if self.is_sequence and self.current_step < len(self.hints):
+            return self.hints[self.current_step]
+        elif not self.is_sequence and self.hints:
+            return self.hints[0]
+        return ""
+    
     def check_answer(self, answer):
-        if answer.upper().strip() == self.correct_answer.upper().strip():
-            self.solved = True
-            self.active = False
-            self.message = "ACCESO CONCEDIDO!"
-            self.message_timer = 120
-            return True
-        else:
-            self.message = "ACCESO DENEGADO"
+        try:
+            clean_answer = answer.upper().strip()
+            
+            if not clean_answer:
+                self.message = "ENTRADA VACIA"
+                self.message_timer = 60
+                return False
+            
+            if self.is_sequence:
+                expected = self.sequence_answers[self.current_step].upper().strip()
+                if clean_answer == expected:
+                    self.current_step += 1
+                    if self.current_step >= len(self.sequence_answers):
+                        self.solved = True
+                        self.active = False
+                        self.message = "SECUENCIA COMPLETA - ACCESO CONCEDIDO!"
+                        self.message_timer = 150
+                        return True
+                    else:
+                        self.message = f"CORRECTO! Paso {self.current_step}/{len(self.sequence_answers)}"
+                        self.message_timer = 120
+                        return 'partial'
+                else:
+                    self.attempts += 1
+                    if self.attempts >= self.max_attempts:
+                        self.current_step = 0
+                        self.attempts = 0
+                        self.message = "REINICIANDO SECUENCIA..."
+                    else:
+                        self.message = f"INCORRECTO - Intentos: {self.attempts}/{self.max_attempts}"
+                    self.message_timer = 80
+                    return False
+            else:
+                if clean_answer == self.correct_answer.upper().strip():
+                    self.solved = True
+                    self.active = False
+                    self.message = "ACCESO CONCEDIDO!"
+                    self.message_timer = 120
+                    return True
+                else:
+                    self.message = "ACCESO DENEGADO"
+                    self.message_timer = 60
+                    return False
+        except Exception as e:
+            self.message = "ERROR DE VALIDACION"
             self.message_timer = 60
             return False
     
@@ -690,8 +743,12 @@ class CyberPuzzle:
         
         size = 12
         if not self.solved:
-            color = CYBER_COLORS['warning']
-            pulse = abs(math.sin(game_time * 0.1)) * 4
+            if self.is_sequence and self.current_step > 0:
+                color = CYBER_COLORS['primary_cyan']
+                pulse = abs(math.sin(game_time * 0.15)) * 3
+            else:
+                color = CYBER_COLORS['warning']
+                pulse = abs(math.sin(game_time * 0.1)) * 4
             
             pygame.draw.rect(surface, (60, 40, 0), 
                            (screen_pos[0] - size - pulse, screen_pos[1] - size - pulse, 
@@ -706,6 +763,12 @@ class CyberPuzzle:
             pygame.draw.line(surface, color,
                            (screen_pos[0] + 6, screen_pos[1] - 6),
                            (screen_pos[0] - 6, screen_pos[1] + 6), 2)
+            
+            if self.is_sequence and self.current_step > 0:
+                for i in range(self.current_step):
+                    dot_y = screen_pos[1] + size + 5 + i * 3
+                    pygame.draw.circle(surface, CYBER_COLORS['safe'], 
+                                     (int(screen_pos[0]), int(dot_y)), 1)
         else:
             color = CYBER_COLORS['safe']
             pygame.draw.rect(surface, (0, 60, 40), 
@@ -719,6 +782,76 @@ class CyberPuzzle:
             pygame.draw.line(surface, color,
                            (screen_pos[0] - 1, screen_pos[1] + 4),
                            (screen_pos[0] + 6, screen_pos[1] - 4), 2)
+
+
+# ============= ESTRUCTURAS DE DATOS: LINKED LIST (LISTA ENLAZADA) =============
+class SecurityEventNode:
+    def __init__(self, event_type, severity, timestamp):
+        self.event_type = event_type
+        self.severity = severity
+        self.timestamp = timestamp
+        self.next = None
+        self.prev = None
+
+class SecurityEventLinkedList:
+    def __init__(self, max_events=10):
+        self.head = None
+        self.tail = None
+        self.size = 0
+        self.max_events = max_events
+    
+    def add_event(self, event_type, severity, timestamp):
+        new_node = SecurityEventNode(event_type, severity, timestamp)
+        
+        if self.head is None:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+        
+        self.size += 1
+        
+        if self.size > self.max_events:
+            self.remove_oldest()
+    
+    def remove_oldest(self):
+        if self.head is None:
+            return None
+        
+        old_head = self.head
+        self.head = self.head.next
+        
+        if self.head:
+            self.head.prev = None
+        else:
+            self.tail = None
+        
+        self.size -= 1
+        return old_head
+    
+    def get_recent_events(self, count=5):
+        events = []
+        current = self.tail
+        
+        while current and len(events) < count:
+            events.append({
+                'type': current.event_type,
+                'severity': current.severity,
+                'timestamp': current.timestamp
+            })
+            current = current.prev
+        
+        return events
+    
+    def clear(self):
+        self.head = None
+        self.tail = None
+        self.size = 0
+    
+    def is_empty(self):
+        return self.head is None
 
 
 # ============= ESTRUCTURAS DE DATOS: QUEUE (COLA) =============
@@ -1028,8 +1161,16 @@ class PacketFilteringGame:
             
             for i in range(3):
                 y = screen_pos[1] - 6 + i * 6
+                offset = math.sin(game_time * 0.1 + i) * 2
                 pygame.draw.line(surface, color, 
-                               (screen_pos[0] - 8, y), (screen_pos[0] + 8, y), 1)
+                               (screen_pos[0] - 8 + offset, y), 
+                               (screen_pos[0] + 8 + offset, y), 2)
+            
+            for i in range(4):
+                angle = (game_time * 0.05 + i * math.pi / 2)
+                px = screen_pos[0] + math.cos(angle) * (size + pulse + 8)
+                py = screen_pos[1] + math.sin(angle) * (size + pulse + 8)
+                pygame.draw.circle(surface, (0, 150, 255), (int(px), int(py)), 2)
         else:
             color = CYBER_COLORS['safe']
             pygame.draw.rect(surface, (0, 60, 40), 
@@ -1048,25 +1189,47 @@ class PacketFilteringGame:
         if not self.active:
             return
         
-        ui_x = 20
-        ui_y = 40
+        ui_x = 10
+        ui_y = surface.get_height() - 100
+        panel_width = 140
+        panel_height = 95
+        
+        pygame.draw.rect(surface, (5, 10, 20), (ui_x, ui_y, panel_width, panel_height))
+        pygame.draw.rect(surface, CYBER_COLORS['primary_cyan'], (ui_x, ui_y, panel_width, panel_height), 2)
+        
+        pygame.draw.rect(surface, (10, 20, 35), (ui_x + 2, ui_y + 2, panel_width - 4, 15))
         
         title_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_cyan'])
-        title_font.render('FILTRO DE PAQUETES', surface, (ui_x, ui_y))
+        title_font.render('FILTRO DE PAQUETES', surface, (ui_x + 8, ui_y + 5))
         
-        queue_y = ui_y + 15
-        for i, packet in enumerate(self.packet_queue.queue):
+        score_y = ui_y + 22
+        score_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_green'])
+        score_text = f"SCORE: {self.score}/{self.required_score}"
+        score_font.render(score_text, surface, (ui_x + 5, score_y))
+        
+        bar_y = ui_y + 35
+        bar_width = panel_width - 10
+        bar_height = 6
+        pygame.draw.rect(surface, (20, 20, 30), (ui_x + 5, bar_y, bar_width, bar_height))
+        progress = min(1.0, self.score / self.required_score)
+        progress_width = int(progress * bar_width)
+        progress_color = CYBER_COLORS['safe'] if progress >= 1.0 else CYBER_COLORS['warning']
+        pygame.draw.rect(surface, progress_color, (ui_x + 5, bar_y, progress_width, bar_height))
+        pygame.draw.rect(surface, CYBER_COLORS['primary_cyan'], (ui_x + 5, bar_y, bar_width, bar_height), 1)
+        
+        queue_y = ui_y + 47
+        queue_label = text.Font('data/fonts/small_font.png', (180, 180, 200))
+        queue_label.render("COLA:", surface, (ui_x + 5, queue_y))
+        
+        for i, packet in enumerate(self.packet_queue.queue[:3]):
             color = CYBER_COLORS['danger'] if packet['is_threat'] else CYBER_COLORS['safe']
             packet_font = text.Font('data/fonts/small_font.png', color)
-            packet_text = f"{i+1}. {packet['type']}"
-            packet_font.render(packet_text, surface, (ui_x, queue_y + i * 10))
+            packet_text = f"{packet['type'][:7]}"
+            packet_font.render(packet_text, surface, (ui_x + 40, queue_y + i * 8))
         
-        score_y = queue_y + len(self.packet_queue.queue) * 10 + 10
-        score_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_green'])
-        score_font.render(f"SCORE: {self.score}/{self.required_score}", surface, (ui_x, score_y))
-        
-        hint_font = text.Font('data/fonts/small_font.png', (150, 150, 150))
-        hint_font.render("F: BLOQUEAR - G: PERMITIR", surface, (ui_x, score_y + 12))
+        hint_font = text.Font('data/fonts/small_font.png', (150, 170, 150))
+        hint_font.render("F:BLOQUEAR", surface, (ui_x + 5, ui_y + panel_height - 18))
+        hint_font.render("G:PERMITIR", surface, (ui_x + 5, ui_y + panel_height - 10))
 
 
 # ============= FUNCIONES DE RENDERIZADO CYBER =============
@@ -1285,8 +1448,10 @@ level_puzzles = {
     ),
     'level_2': CyberPuzzle(
         700, 120, 'terminal',
-        'HTTPS',
-        'Protocolo web seguro con encriptacion? (HTTP_)'
+        '443,22,80',
+        'SECUENCIA DE PUERTOS SEGUROS:\nIngresa cada puerto en orden.',
+        hints=['Puerto HTTPS?', 'Puerto SSH?', 'Puerto HTTP?'],
+        is_sequence=True
     ),
     'level_3': CyberPuzzle(
         650, 380, 'terminal',
@@ -1312,6 +1477,7 @@ level_packet_games = {
 ids_system = IntrusionDetectionSystem()
 traffic_analyzer = NetworkTrafficAnalyzer()
 firewall_stack = FirewallRuleStack()
+security_events = SecurityEventLinkedList(max_events=15)
 
 # Load sounds with fallback for environments without audio
 try:
@@ -1660,8 +1826,14 @@ while True:
     # door - ahora es puerto seguro
     if door:
         puzzle_solved = (not current_puzzle) or current_puzzle.solved
+        packet_game_solved = (not current_packet_game) or current_packet_game.completed
         
-        if puzzle_solved:
+        if level_name == 'level_1':
+            door_unlocked = puzzle_solved and packet_game_solved
+        else:
+            door_unlocked = puzzle_solved
+        
+        if door_unlocked:
             render_secure_port(door, scroll, game_time)
         else:
             pos = [door[0] - scroll[0], door[1] - scroll[1]]
@@ -1671,11 +1843,11 @@ while True:
                 font.render('BLOQUEADO', display, (pos[0] - 20, pos[1] - 15))
         
         if random.randint(1, 7) == 1:
-            color = CYBER_COLORS['safe'] if puzzle_solved else CYBER_COLORS['danger']
+            color = CYBER_COLORS['safe'] if door_unlocked else CYBER_COLORS['danger']
             particles.append(particles_m.Particle(door[0] + 6, door[1] + 9, 'light', [random.randint(0, 10) / 10 - 0.5, random.randint(0, 10) / 10 - 2], 0.1, 3.5 + random.randint(0, 20) / 10, custom_color=color))
         
         if player.get_distance([door[0] + 6, door[1] + 9]) < 5:
-            if puzzle_solved:
+            if door_unlocked:
                 if map_transition == 0:
                     fadeout_music(500)
                     map_transition = 1
@@ -1683,7 +1855,16 @@ while True:
                     play_sound('door')
             else:
                 if player_message[0] == 0:
-                    player_message = [120, 'Terminal de acceso bloqueada!', '']
+                    if level_name == 'level_1':
+                        missing = []
+                        if not puzzle_solved:
+                            missing.append('terminal')
+                        if not packet_game_solved:
+                            missing.append('filtrado')
+                        msg = f"Falta: {', '.join(missing)}"
+                        player_message = [150, msg, '']
+                    else:
+                        player_message = [120, 'Terminal de acceso bloqueada!', '']
 
     # render tiles
     render_list = level_map.get_visible(scroll)
@@ -1899,24 +2080,42 @@ while True:
                 objectives_dismissed = True
             
             if puzzle_input_active:
-                if event.key == K_BACKSPACE:
-                    puzzle_user_input = puzzle_user_input[:-1]
-                elif event.key == K_RETURN:
-                    if current_puzzle and puzzle_user_input:
-                        if current_puzzle.check_answer(puzzle_user_input):
-                            play_sound('mana_1')
-                            player_message = [180, 'Terminal desbloqueada!', '']
-                        else:
-                            play_sound('death')
-                            player_message = [180, 'Acceso denegado. Intenta de nuevo.', '']
-                        puzzle_user_input = ""
+                try:
+                    if event.key == K_BACKSPACE:
+                        puzzle_user_input = puzzle_user_input[:-1]
+                    elif event.key == K_RETURN:
+                        if current_puzzle and puzzle_user_input:
+                            result = current_puzzle.check_answer(puzzle_user_input)
+                            if result == True:
+                                play_sound('mana_1')
+                                player_message = [180, 'Terminal desbloqueada!', '']
+                                security_events.add_event('puzzle_solved', 10, game_time)
+                            elif result == 'partial':
+                                play_sound('mana_2')
+                                hint = current_puzzle.get_current_hint()
+                                if hint:
+                                    player_message = [200, hint, '']
+                                else:
+                                    player_message = [150, current_puzzle.message, '']
+                            else:
+                                play_sound('death')
+                                player_message = [180, current_puzzle.message or 'Acceso denegado.', '']
+                                security_events.add_event('puzzle_failed', 5, game_time)
+                            puzzle_user_input = ""
+                            if result == True:
+                                puzzle_input_active = False
+                    elif event.key == K_ESCAPE:
                         puzzle_input_active = False
-                elif event.key == K_ESCAPE:
-                    puzzle_input_active = False
+                        puzzle_user_input = ""
+                    elif len(puzzle_user_input) < 20:
+                        char = event.unicode
+                        if char and (char.isalnum() or char in ' '):
+                            clean_char = ''.join(c for c in char if c.isprintable())
+                            if clean_char:
+                                puzzle_user_input += clean_char.upper()
+                except Exception as e:
                     puzzle_user_input = ""
-                elif len(puzzle_user_input) < 20:
-                    if event.unicode.isalnum() or event.unicode == ' ':
-                        puzzle_user_input += event.unicode.upper()
+                    player_message = [120, 'Error de entrada', '']
             
             if event.key == K_e and not puzzle_input_active:
                 for npc in npcs:
@@ -1931,7 +2130,12 @@ while True:
                     if current_puzzle.can_activate(player.pos):
                         puzzle_input_active = True
                         puzzle_user_input = ""
-                        player_message = [400, current_puzzle.question, '']
+                        if current_puzzle.is_sequence:
+                            hint = current_puzzle.get_current_hint()
+                            msg = f"{current_puzzle.question}\n{hint}" if hint else current_puzzle.question
+                            player_message = [450, msg, '']
+                        else:
+                            player_message = [400, current_puzzle.question, '']
                         play_sound('thought')
                 
                 if current_packet_game and current_packet_game.can_activate(player.pos):

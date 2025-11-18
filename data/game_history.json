@@ -277,5 +277,84 @@
     "breaches": 1,
     "final_level": "level_1",
     "levels_completed": []
+  },
+  {
+    "player_name": "miau",
+    "date": "2025-11-17 22:27:21",
+    "duration_seconds": 6,
+    "duration_formatted": "6s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "miau",
+    "date": "2025-11-17 22:27:43",
+    "duration_seconds": 6,
+    "duration_formatted": "6s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "ilusa",
+    "date": "2025-11-17 22:28:06",
+    "duration_seconds": 8,
+    "duration_formatted": "8s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "miau",
+    "date": "2025-11-17 22:28:33",
+    "duration_seconds": 8,
+    "duration_formatted": "8s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "miau",
+    "date": "2025-11-17 22:35:36",
+    "duration_seconds": 409,
+    "duration_formatted": "6m 49s",
+    "threats_neutralized": 657186,
+    "firewalls_collected": 24,
+    "breaches": 14,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "princesa",
+    "date": "2025-11-17 22:42:04",
+    "duration_seconds": 101,
+    "duration_formatted": "1m 41s",
+    "threats_neutralized": 94957,
+    "firewalls_collected": 3,
+    "breaches": 3,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "susi",
+    "date": "2025-11-17 23:20:55",
+    "duration_seconds": 296,
+    "duration_formatted": "4m 56s",
+    "threats_neutralized": 1160128,
+    "firewalls_collected": 9,
+    "breaches": 6,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
   }
 ]
