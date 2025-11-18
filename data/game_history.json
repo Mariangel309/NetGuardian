@@ -356,5 +356,42 @@
     "levels_completed": [
       "level_2"
     ]
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-18 16:39:55",
+    "duration_seconds": 5,
+    "duration_formatted": "5s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "fiona",
+    "date": "2025-11-18 16:45:43",
+    "duration_seconds": 334,
+    "duration_formatted": "5m 34s",
+    "threats_neutralized": 1018214,
+    "firewalls_collected": 10,
+    "breaches": 6,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-18 17:59:10",
+    "duration_seconds": 579,
+    "duration_formatted": "9m 39s",
+    "threats_neutralized": 1281045,
+    "firewalls_collected": 27,
+    "breaches": 12,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
   }
 ]

@@ -84,6 +84,37 @@ GAME_STORY = {
         '- TERMINALES: Resuelve desafios',
         '',
         '[Presiona ESPACIO para comenzar]'
+    ],
+    'ending': [
+        'MISION COMPLETADA',
+        '',
+        'ANO 2084 - RED GLOBAL RESTAURADA',
+        '',
+        'Gracias a tu valentia y conocimiento,',
+        'la infraestructura digital mundial',
+        'ha sido completamente restaurada.',
+        '',
+        'SECTORES ASEGURADOS:',
+        '1. Zona de Entrenamiento - FIREWALL',
+        '2. Trafico Malicioso - HTTPS/TLS',
+        '3. Amenaza Persistente - ENCRIPTACION AES',
+        '4. Nucleo del Sistema - DEFENSA EN CAPAS',
+        '',
+        'Los 4 sectores criticos ahora estan',
+        'protegidos con las mejores practicas',
+        'de ciberseguridad.',
+        '',
+        'Como Guardian de Red, has demostrado',
+        'que la seguridad digital no es solo',
+        'tecnologia, sino conocimiento,',
+        'estrategia y vigilancia constante.',
+        '',
+        'La red global esta segura...',
+        'por ahora.',
+        '',
+        'FIN',
+        '',
+        '[Presiona ESC para salir]'
     ]
 }
 
@@ -101,36 +132,37 @@ LEVEL_OBJECTIVES = {
         'concept': 'CONCEPTO: Los firewalls son barreras de seguridad\nque protegen redes de accesos no autorizados.\nDebes completar AMBOS desafios para avanzar.'
     },
     'level_2': {
-        'title': 'SECTOR 2: TRAFICO MALICIOSO',
+        'title': 'SECTOR 2: PROTOCOLO HTTPS/TLS',
         'objectives': [
             '1. Esquiva los paquetes maliciosos',
             '2. Encuentra y habla con los NPCs',
-            '3. Resuelve el desafio de protocolo',
+            '3. Resuelve el puzzle de protocolo TLS',
             '4. Sobrevive a las oleadas de ataques',
             '5. Accede al puerto seguro'
         ],
-        'concept': 'CONCEPTO: HTTPS es el protocolo seguro de internet.\nEncripta la comunicacion entre navegador y servidor.'
+        'concept': 'CONCEPTO: HTTPS/TLS encripta la comunicacion\nentre cliente y servidor usando certificados\ny un proceso de handshake seguro.'
     },
     'level_3': {
-        'title': 'SECTOR 3: AMENAZA PERSISTENTE',
+        'title': 'SECTOR 3: ENCRIPTACION AES',
         'objectives': [
             '1. Enfrenta al servidor comprometido',
-            '2. Aprende sobre encriptacion',
-            '3. Usa tus recursos estrategicamente',
+            '2. Resuelve el puzzle de encriptacion AES',
+            '3. Completa el mini-juego de filtrado',
             '4. Neutraliza la amenaza avanzada',
             '5. Restaura la seguridad del sector'
         ],
-        'concept': 'CONCEPTO: La encriptacion protege datos\ntransformandolos en codigo ilegible sin la clave.'
+        'concept': 'CONCEPTO: AES (Advanced Encryption Standard)\nes el algoritmo de encriptacion mas usado.\nClaves de 256 bits son las mas seguras.'
     },
     'level_4': {
-        'title': 'SECTOR 4: NUCLEO DEL SISTEMA',
+        'title': 'SECTOR 4: DEFENSA EN CAPAS',
         'objectives': [
             '1. Alcanza el nucleo central',
-            '2. Completa el desafio final',
-            '3. Restaura la seguridad global',
-            '4. Conviertete en el Guardian definitivo'
+            '2. Resuelve el puzzle de defensa multicapa',
+            '3. Completa el filtrado final',
+            '4. Restaura la seguridad global',
+            '5. Conviertete en el Guardian definitivo'
         ],
-        'concept': 'CONCEPTO: La seguridad en capas combina\nmultiples defensas para proteccion robusta.'
+        'concept': 'CONCEPTO: La seguridad en capas combina\nFirewall, IDS, Encriptacion y Backups\npara proteccion robusta y redundante.'
     }
 }
 
@@ -1448,29 +1480,33 @@ level_puzzles = {
     ),
     'level_2': CyberPuzzle(
         700, 120, 'terminal',
-        '443,22,80',
-        'SECUENCIA DE PUERTOS SEGUROS:\nIngresa cada puerto en orden.',
-        hints=['Puerto HTTPS?', 'Puerto SSH?', 'Puerto HTTP?'],
+        'TLS,CERT,HANDSHAKE',
+        'PROTOCOLO HTTPS/TLS - Secuencia de autenticacion:\n1.Protocolo de encriptacion?\n2.Documento de identidad digital?\n3.Proceso de establecer conexion segura?',
+        hints=['Protocolo: Transport Layer Security', 'Identidad: Certificate', 'Conexion: Handshake'],
         is_sequence=True
     ),
     'level_3': CyberPuzzle(
         650, 380, 'terminal',
-        'ENCRYPTION',
-        'Protege datos convirtiendolos en codigo? (_NCR_PT__N)'
+        'AES,256,KEY',
+        'SISTEMA DE ENCRIPTACION AES:\n1.Algoritmo estandar de encriptacion?\n2.Bits de clave mas segura (128/256/512)?\n3.Dato secreto para cifrar/descifrar?',
+        hints=['Advanced Encryption Standard', 'Opciones: 128, 256, 512', 'Llave secreta'],
+        is_sequence=True
     ),
     'level_4': CyberPuzzle(
         500, 220, 'terminal',
-        'GUARDIAN',
-        'Defensor de la seguridad digital? (GU_RD__N)'
+        'FIREWALL,IDS,ENCRYPT,BACKUP',
+        'DEFENSA EN CAPAS - Orden de seguridad:\n1.Primera barrera de red?\n2.Sistema de deteccion?\n3.Proteccion de datos?\n4.Recuperacion ante desastres?',
+        hints=['Barrera perimetral', 'Intrusion Detection System', 'Cifrado', 'Copia de seguridad'],
+        is_sequence=True
     ),
 }
 
 # ============= MINI-JUEGOS DE FILTRADO DE PAQUETES POR NIVEL =============
 level_packet_games = {
     'level_1': PacketFilteringGame(500, 165),
-    'level_2': PacketFilteringGame(550, 100),
-    'level_3': None,
-    'level_4': None,
+    'level_2': None,
+    'level_3': PacketFilteringGame(500, 400),
+    'level_4': PacketFilteringGame(450, 220),
 }
 
 # Inicializar sistemas globales de ciberseguridad
@@ -1549,7 +1585,7 @@ def reload_level(restart_audio=True):
         puzzle_data = level_puzzles[level_name]
         current_puzzle = CyberPuzzle(puzzle_data.pos[0], puzzle_data.pos[1], 
                                      puzzle_data.puzzle_type, puzzle_data.correct_answer, 
-                                     puzzle_data.question)
+                                     puzzle_data.question, puzzle_data.hints, puzzle_data.is_sequence)
     else:
         current_puzzle = None
     
@@ -1754,6 +1790,64 @@ while True:
         game_time += 1
         continue
     
+    # PANTALLA FINAL
+    if game_state == 'ending':
+        display.fill(CYBER_COLORS['bg_dark'])
+        
+        grid_color = (0, 50, 80)
+        for x in range(0, display.get_width(), 20):
+            alpha = abs(math.sin(game_time * 0.01 + x * 0.1))
+            if alpha > 0.5:
+                pygame.draw.line(display, grid_color, (x, 0), (x, display.get_height()), 1)
+        
+        for y in range(0, display.get_height(), 20):
+            alpha = abs(math.sin(game_time * 0.01 + y * 0.1))
+            if alpha > 0.5:
+                pygame.draw.line(display, grid_color, (0, y), (display.get_width(), y), 1)
+        
+        y_offset = 10
+        for line in GAME_STORY['ending']:
+            if line == '':
+                y_offset += 6
+            elif line.startswith('MISION') or line.startswith('ANO') or line.startswith('SECTORES') or line.startswith('FIN'):
+                cyan_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_cyan'])
+                line_x = display.get_width() // 2 - font.width(line) // 2
+                cyan_font.render(line, display, (line_x, y_offset))
+                y_offset += 12
+            elif line.startswith('['):
+                green_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_green'])
+                line_x = display.get_width() // 2 - font.width(line) // 2
+                glow = abs(math.sin(game_time * 0.1)) * 20
+                glow_color = (0, int(255 - glow), int(100 + glow))
+                glow_font = text.Font('data/fonts/small_font.png', glow_color)
+                glow_font.render(line, display, (line_x, y_offset))
+                y_offset += 12
+            elif line.startswith('1.') or line.startswith('2.') or line.startswith('3.') or line.startswith('4.'):
+                green_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_green'])
+                green_font.render(line, display, (30, y_offset))
+                y_offset += 9
+            else:
+                white_font = text.Font('data/fonts/small_font.png', (200, 200, 200))
+                line_x = display.get_width() // 2 - font.width(line) // 2
+                white_font.render(line, display, (line_x, y_offset))
+                y_offset += 9
+        
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    fadeout_music(1000)
+                    game_state = 'menu'
+                    game_menu.state = MenuState.MAIN
+        
+        screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
+        pygame.display.update()
+        clock.tick(60)
+        game_time += 1
+        continue
+    
     # JUEGO
     display.fill(CYBER_COLORS['bg_dark'])
 
@@ -1771,9 +1865,22 @@ while True:
         if (last < 60) and (map_transition >= 60):
             if next_level:
                 level_n = int(level_name.split('_')[-1])
-                level_name = level_name.split('_')[0] + '_' + str(level_n + 1)
-                game_history.add_level_completed(level_name)
-            reload_level(next_level)
+                if level_n >= 4:
+                    game_history.end_session('level_4')
+                    game_state = 'ending'
+                    map_transition = 0
+                    fadeout_music(1000)
+                    pygame.mouse.set_visible(True)
+                    screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
+                    pygame.display.update()
+                    clock.tick(60)
+                    continue
+                else:
+                    level_name = level_name.split('_')[0] + '_' + str(level_n + 1)
+                    game_history.add_level_completed(level_name)
+                    reload_level(next_level)
+            else:
+                reload_level(next_level)
         if map_transition > 120:
             map_transition = 0
 
@@ -1828,7 +1935,7 @@ while True:
         puzzle_solved = (not current_puzzle) or current_puzzle.solved
         packet_game_solved = (not current_packet_game) or current_packet_game.completed
         
-        if level_name == 'level_1':
+        if level_name in ['level_1', 'level_3', 'level_4']:
             door_unlocked = puzzle_solved and packet_game_solved
         else:
             door_unlocked = puzzle_solved
@@ -1855,12 +1962,13 @@ while True:
                     play_sound('door')
             else:
                 if player_message[0] == 0:
-                    if level_name == 'level_1':
-                        missing = []
-                        if not puzzle_solved:
-                            missing.append('terminal')
-                        if not packet_game_solved:
-                            missing.append('filtrado')
+                    missing = []
+                    if not puzzle_solved:
+                        missing.append('terminal')
+                    if not packet_game_solved:
+                        missing.append('filtrado')
+                    
+                    if missing:
                         msg = f"Falta: {', '.join(missing)}"
                         player_message = [150, msg, '']
                     else:
@@ -2424,6 +2532,13 @@ while True:
                 particles.append(particles_m.Particle(eye_base[0], eye_base[1], 'red_light', vel, 0.2, 1.5 + random.randint(0, 20) / 10, custom_color=CYBER_COLORS['primary_green']))
         if (last < 1200) and (events['lv3timer'] >= 1200):
             player_message = [200, CYBER_MESSAGES['more_attacks'], '']
+    
+    if level_name == 'level_4':
+        if level_time > 120:
+            if not door:
+                door = (540, 220)
+                ready_to_exit = True
+                player_message = [300, 'Nivel final - Completa los desafios!', '']
     
     if reset:
         if soul_mode:
