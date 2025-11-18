@@ -266,5 +266,16 @@
     "breaches": 0,
     "final_level": "level_1",
     "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-17 19:53:30",
+    "duration_seconds": 69,
+    "duration_formatted": "1m 9s",
+    "threats_neutralized": 126821,
+    "firewalls_collected": 3,
+    "breaches": 1,
+    "final_level": "level_1",
+    "levels_completed": []
   }
 ]
