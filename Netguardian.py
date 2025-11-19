@@ -136,33 +136,35 @@ LEVEL_OBJECTIVES = {
         'objectives': [
             '1. Esquiva los paquetes maliciosos',
             '2. Encuentra y habla con los NPCs',
-            '3. Resuelve el puzzle de protocolo TLS',
-            '4. Sobrevive a las oleadas de ataques',
-            '5. Accede al puerto seguro'
+            '3. Resuelve el puzzle HTTPS/TLS (5 pasos)',
+            '4. Completa el mini-juego de filtrado',
+            '5. Sobrevive a las oleadas de ataques',
+            '6. Alcanza el puerto seguro'
         ],
-        'concept': 'CONCEPTO: HTTPS/TLS encripta la comunicacion\nentre cliente y servidor usando certificados\ny un proceso de handshake seguro.'
+        'concept': 'CONCEPTO: HTTPS/TLS encripta la comunicacion\nentre cliente y servidor usando certificados\ny un proceso de handshake seguro.\nDebes completar AMBOS desafios para avanzar.'
     },
     'level_3': {
         'title': 'SECTOR 3: ENCRIPTACION AES',
         'objectives': [
             '1. Enfrenta al servidor comprometido',
-            '2. Resuelve el puzzle de encriptacion AES',
+            '2. Resuelve el puzzle AES avanzado (5 pasos)',
             '3. Completa el mini-juego de filtrado',
             '4. Neutraliza la amenaza avanzada',
             '5. Restaura la seguridad del sector'
         ],
-        'concept': 'CONCEPTO: AES (Advanced Encryption Standard)\nes el algoritmo de encriptacion mas usado.\nClaves de 256 bits son las mas seguras.'
+        'concept': 'CONCEPTO: AES (Advanced Encryption Standard)\nes el algoritmo de encriptacion mas usado.\nUsa encriptacion simetrica con claves de 256 bits.\nDebes completar AMBOS desafios para avanzar.'
     },
     'level_4': {
         'title': 'SECTOR 4: DEFENSA EN CAPAS',
         'objectives': [
             '1. Alcanza el nucleo central',
-            '2. Resuelve el puzzle de defensa multicapa',
-            '3. Completa el filtrado final',
-            '4. Restaura la seguridad global',
-            '5. Conviertete en el Guardian definitivo'
+            '2. Resuelve el puzzle de arquitectura (6 pasos)',
+            '3. Completa el filtrado de seguridad final',
+            '4. Neutraliza todas las amenazas',
+            '5. Restaura la seguridad global',
+            '6. Conviertete en el Guardian definitivo'
         ],
-        'concept': 'CONCEPTO: La seguridad en capas combina\nFirewall, IDS, Encriptacion y Backups\npara proteccion robusta y redundante.'
+        'concept': 'CONCEPTO: La seguridad en capas combina\nFirewall, IDS, WAF, Encriptacion, Backups y MFA\npara proteccion robusta, redundante y resiliente.\nDebes completar AMBOS desafios para avanzar.'
     }
 }
 
@@ -1440,12 +1442,12 @@ level_npcs = {
         ], 'server'),
     ],
     'level_2': [
-        NPC(450, 168, 'Firewall Beta', [
+        NPC(280, 50, 'Firewall Beta', [
             'Este sector sufre ataques de paquetes maliciosos.',
             'Los atacantes envian datos daninos a la red.',
             'Usa tu agilidad para esquivar las amenazas.'
         ], 'firewall'),
-        NPC(600, 168, 'Nodo de Inteligencia', [
+        NPC(480, 50, 'Nodo de Inteligencia', [
             'El protocolo HTTPS protege las comunicaciones.',
             'Encripta datos entre cliente y servidor.',
             'Resuelve el terminal para avanzar de forma segura.'
@@ -1479,24 +1481,24 @@ level_puzzles = {
         'Barrera que filtra trafico de red? (F_R_W_LL)'
     ),
     'level_2': CyberPuzzle(
-        700, 120, 'terminal',
-        'TLS,CERT,HANDSHAKE',
-        'PROTOCOLO HTTPS/TLS - Secuencia de autenticacion:\n1.Protocolo de encriptacion?\n2.Documento de identidad digital?\n3.Proceso de establecer conexion segura?',
-        hints=['Protocolo: Transport Layer Security', 'Identidad: Certificate', 'Conexion: Handshake'],
+        580, 50, 'terminal',
+        'TLS,HTTPS,CERT,HANDSHAKE,443',
+        'PROTOCOLO HTTPS/TLS - Secuencia de seguridad:\n1.Protocolo de encriptacion (3 letras)?\n2.Protocolo web seguro (5 letras)?\n3.Documento de identidad digital?\n4.Proceso de conexion segura?\n5.Puerto estandar HTTPS?',
+        hints=['Transport Layer Security', 'HyperText Transfer Protocol Secure', 'Certificate digital', 'Negociacion inicial', 'Puerto comun: 80, 443, 8080'],
         is_sequence=True
     ),
     'level_3': CyberPuzzle(
         650, 380, 'terminal',
-        'AES,256,KEY',
-        'SISTEMA DE ENCRIPTACION AES:\n1.Algoritmo estandar de encriptacion?\n2.Bits de clave mas segura (128/256/512)?\n3.Dato secreto para cifrar/descifrar?',
-        hints=['Advanced Encryption Standard', 'Opciones: 128, 256, 512', 'Llave secreta'],
+        'AES,SYMMETRIC,256,KEY,CIPHER',
+        'SISTEMA DE ENCRIPTACION AES:\n1.Algoritmo estandar (3 letras)?\n2.Tipo de encriptacion (usa misma clave)?\n3.Bits de clave mas segura?\n4.Dato secreto para cifrar?\n5.Texto encriptado resultante?',
+        hints=['Advanced Encryption Standard', 'Symmetric vs Asymmetric', 'Opciones: 128, 192, 256', 'Secret Key', 'Ciphertext'],
         is_sequence=True
     ),
     'level_4': CyberPuzzle(
         500, 220, 'terminal',
-        'FIREWALL,IDS,ENCRYPT,BACKUP',
-        'DEFENSA EN CAPAS - Orden de seguridad:\n1.Primera barrera de red?\n2.Sistema de deteccion?\n3.Proteccion de datos?\n4.Recuperacion ante desastres?',
-        hints=['Barrera perimetral', 'Intrusion Detection System', 'Cifrado', 'Copia de seguridad'],
+        'FIREWALL,IDS,WAF,ENCRYPT,BACKUP,MFA',
+        'DEFENSA EN CAPAS - Arquitectura completa:\n1.Primera barrera perimetral?\n2.Sistema de deteccion de intrusiones?\n3.Firewall de aplicaciones web?\n4.Proteccion de datos en transito?\n5.Recuperacion ante desastres?\n6.Autenticacion multifactor (siglas)?',
+        hints=['Barrera de red', 'Intrusion Detection System', 'Web Application Firewall', 'Cifrado SSL/TLS', 'Copia de seguridad', 'Multi-Factor Authentication'],
         is_sequence=True
     ),
 }
@@ -1504,7 +1506,7 @@ level_puzzles = {
 # ============= MINI-JUEGOS DE FILTRADO DE PAQUETES POR NIVEL =============
 level_packet_games = {
     'level_1': PacketFilteringGame(500, 165),
-    'level_2': None,
+    'level_2': PacketFilteringGame(420, 50),
     'level_3': PacketFilteringGame(500, 400),
     'level_4': PacketFilteringGame(450, 220),
 }
@@ -1935,10 +1937,7 @@ while True:
         puzzle_solved = (not current_puzzle) or current_puzzle.solved
         packet_game_solved = (not current_packet_game) or current_packet_game.completed
         
-        if level_name in ['level_1', 'level_3', 'level_4']:
-            door_unlocked = puzzle_solved and packet_game_solved
-        else:
-            door_unlocked = puzzle_solved
+        door_unlocked = puzzle_solved and packet_game_solved
         
         if door_unlocked:
             render_secure_port(door, scroll, game_time)

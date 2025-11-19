@@ -393,5 +393,31 @@
     "levels_completed": [
       "level_2"
     ]
+  },
+  {
+    "player_name": "cali",
+    "date": "2025-11-18 19:00:54",
+    "duration_seconds": 322,
+    "duration_formatted": "5m 22s",
+    "threats_neutralized": 607295,
+    "firewalls_collected": 8,
+    "breaches": 4,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "suski",
+    "date": "2025-11-18 19:13:39",
+    "duration_seconds": 135,
+    "duration_formatted": "2m 15s",
+    "threats_neutralized": 326675,
+    "firewalls_collected": 9,
+    "breaches": 2,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
   }
 ]
