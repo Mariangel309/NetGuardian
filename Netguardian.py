@@ -96,7 +96,7 @@ GAME_STORY = {
         '',
         'SECTORES ASEGURADOS:',
         '1. Zona de Entrenamiento - FIREWALL',
-        '2. Trafico Malicioso - HTTPS/TLS',
+        '2. Trafico Malicioso - MITIGACION DDOS',
         '3. Amenaza Persistente - ENCRIPTACION AES',
         '4. Nucleo del Sistema - DEFENSA EN CAPAS',
         '',
@@ -132,16 +132,16 @@ LEVEL_OBJECTIVES = {
         'concept': 'CONCEPTO: Los firewalls son barreras de seguridad\nque protegen redes de accesos no autorizados.\nDebes completar AMBOS desafios para avanzar.'
     },
     'level_2': {
-        'title': 'SECTOR 2: PROTOCOLO HTTPS/TLS',
+        'title': 'SECTOR 2: ATAQUES DDOS',
         'objectives': [
             '1. Esquiva los paquetes maliciosos',
             '2. Encuentra y habla con los NPCs',
-            '3. Resuelve el puzzle HTTPS/TLS (5 pasos)',
+            '3. Resuelve el puzzle de DDoS (5 pasos)',
             '4. Completa el mini-juego de filtrado',
             '5. Sobrevive a las oleadas de ataques',
             '6. Alcanza el puerto seguro'
         ],
-        'concept': 'CONCEPTO: HTTPS/TLS encripta la comunicacion\nentre cliente y servidor usando certificados\ny un proceso de handshake seguro.\nDebes completar AMBOS desafios para avanzar.'
+        'concept': 'CONCEPTO: Los ataques DDoS saturan servicios\ncon trafico masivo desde redes de bots.\nLa mitigacion incluye CDN, rate limiting y filtrado.\nDebes completar AMBOS desafios para avanzar.'
     },
     'level_3': {
         'title': 'SECTOR 3: ENCRIPTACION AES',
@@ -1442,14 +1442,14 @@ level_npcs = {
         ], 'server'),
     ],
     'level_2': [
-        NPC(280, 50, 'Firewall Beta', [
+        NPC(280, 320, 'Firewall Beta', [
             'Este sector sufre ataques de paquetes maliciosos.',
             'Los atacantes envian datos daninos a la red.',
             'Usa tu agilidad para esquivar las amenazas.'
         ], 'firewall'),
-        NPC(480, 50, 'Nodo de Inteligencia', [
-            'El protocolo HTTPS protege las comunicaciones.',
-            'Encripta datos entre cliente y servidor.',
+        NPC(480, 340, 'Nodo de Inteligencia', [
+            'Los ataques DDoS saturan servicios con trafico.',
+            'Las redes CDN y rate limiting ayudan a mitigar.',
             'Resuelve el terminal para avanzar de forma segura.'
         ], 'server'),
     ],
@@ -1481,10 +1481,10 @@ level_puzzles = {
         'Barrera que filtra trafico de red? (F_R_W_LL)'
     ),
     'level_2': CyberPuzzle(
-        580, 50, 'terminal',
-        'TLS,HTTPS,CERT,HANDSHAKE,443',
-        'PROTOCOLO HTTPS/TLS - Secuencia de seguridad:\n1.Protocolo de encriptacion (3 letras)?\n2.Protocolo web seguro (5 letras)?\n3.Documento de identidad digital?\n4.Proceso de conexion segura?\n5.Puerto estandar HTTPS?',
-        hints=['Transport Layer Security', 'HyperText Transfer Protocol Secure', 'Certificate digital', 'Negociacion inicial', 'Puerto comun: 80, 443, 8080'],
+        580, 320, 'terminal',
+        'DDOS,BOTNET,FLOOD,CDN,RATE LIMITING',
+        'ATAQUES Y MITIGACION DDOS:\n1.Ataque de denegacion de servicio (4 letras)?\n2.Red de dispositivos comprometidos?\n3.Tipo de ataque que satura con peticiones?\n4.Red de distribucion de contenido (3 letras)?\n5.Tecnica que limita peticiones por tiempo?',
+        hints=['Distributed Denial of Service', 'Red de bots infectados', 'SYN Flood, UDP Flood', 'Content Delivery Network', 'Rate Limiting'],
         is_sequence=True
     ),
     'level_3': CyberPuzzle(
@@ -1506,7 +1506,7 @@ level_puzzles = {
 # ============= MINI-JUEGOS DE FILTRADO DE PAQUETES POR NIVEL =============
 level_packet_games = {
     'level_1': PacketFilteringGame(500, 165),
-    'level_2': PacketFilteringGame(420, 50),
+    'level_2': PacketFilteringGame(420, 330),
     'level_3': PacketFilteringGame(500, 400),
     'level_4': PacketFilteringGame(450, 220),
 }
@@ -1946,7 +1946,7 @@ while True:
             pygame.draw.rect(display, (60, 20, 20), (pos[0], pos[1], 12, 18))
             pygame.draw.rect(display, CYBER_COLORS['danger'], (pos[0], pos[1], 12, 18), 2)
             if game_time % 60 < 30:
-                font.render('BLOQUEADO', display, (pos[0] - 20, pos[1] - 15))
+                font.render('PUERTO BLOQ', display, (pos[0] - 25, pos[1] - 15))
         
         if random.randint(1, 7) == 1:
             color = CYBER_COLORS['safe'] if door_unlocked else CYBER_COLORS['danger']
@@ -1963,13 +1963,13 @@ while True:
                 if player_message[0] == 0:
                     missing = []
                     if not puzzle_solved:
-                        missing.append('terminal')
+                        missing.append('PUZZLE [E]')
                     if not packet_game_solved:
-                        missing.append('filtrado')
+                        missing.append('FILTRADO [E]')
                     
                     if missing:
-                        msg = f"Falta: {', '.join(missing)}"
-                        player_message = [150, msg, '']
+                        msg = f"COMPLETA: {' Y '.join(missing)}"
+                        player_message = [180, msg, '']
                     else:
                         player_message = [120, 'Terminal de acceso bloqueada!', '']
 
