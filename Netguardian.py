@@ -387,11 +387,11 @@ class GameMenu:
         button_width = 120
         button_height = 25
         
-        self.start_button = Button(center_x - button_width // 2, 100, 
+        self.start_button = Button(center_x - button_width // 2, 75, 
                                    button_width, button_height, 'INICIAR', font)
-        self.history_button = Button(center_x - button_width // 2, 135, 
+        self.history_button = Button(center_x - button_width // 2, 110, 
                                      button_width, button_height, 'HISTORIAL', font)
-        self.exit_button = Button(center_x - button_width // 2, 170, 
+        self.exit_button = Button(center_x - button_width // 2, 145, 
                                   button_width, button_height, 'SALIR', font)
         
         self.volume_control = VolumeControl(display.get_width() - 80, 10, font)
