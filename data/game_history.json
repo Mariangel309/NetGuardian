@@ -482,5 +482,27 @@
     "levels_completed": [
       "level_2"
     ]
+  },
+  {
+    "player_name": "ppp",
+    "date": "2025-11-20 00:30:38",
+    "duration_seconds": 89,
+    "duration_formatted": "1m 29s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "dd",
+    "date": "2025-11-20 00:32:17",
+    "duration_seconds": 87,
+    "duration_formatted": "1m 27s",
+    "threats_neutralized": 5206,
+    "firewalls_collected": 0,
+    "breaches": 1,
+    "final_level": "level_1",
+    "levels_completed": []
   }
 ]
