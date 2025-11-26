@@ -1454,12 +1454,12 @@ level_npcs = {
         ], 'server'),
     ],
     'level_3': [
-        NPC(400, 380, 'Firewall Gamma', [
+        NPC(380, 350, 'Firewall Gamma', [
             'Amenaza Persistente Avanzada (APT) detectada.',
             'Los APT son ataques sofisticados y prolongados.',
             'La ENCRIPTACION protege datos sensibles.'
         ], 'firewall'),
-        NPC(550, 400, 'Centro de Operaciones', [
+        NPC(320, 360, 'Centro de Operaciones', [
             'La encriptacion transforma datos en codigo.',
             'Solo quien tiene la clave puede leerlos.',
             'Es fundamental para la privacidad digital.'
@@ -1472,6 +1472,23 @@ level_npcs = {
             'Felicidades, Guardian. Red restaurada!'
         ], 'firewall'),
     ],
+}
+
+PUZZLE_DEFINITIONS = {
+    'level_2': {
+        0: {'term': 'DDOS', 'definition': 'Distributed Denial of Service - Ataque que satura un servidor con trafico masivo'},
+        1: {'term': 'BOTNET', 'definition': 'Red de computadoras infectadas controladas por un atacante'},
+        2: {'term': 'FLOOD', 'definition': 'Inundacion de paquetes (SYN Flood, UDP Flood) para saturar servicios'},
+        3: {'term': 'CDN', 'definition': 'Content Delivery Network - Distribuye contenido para reducir carga'},
+        4: {'term': 'RATE LIMITING', 'definition': 'Tecnica que limita el numero de peticiones por tiempo'},
+    },
+    'level_3': {
+        0: {'term': 'AES', 'definition': 'Advanced Encryption Standard - Algoritmo de cifrado simetrico'},
+        1: {'term': 'SYMMETRIC', 'definition': 'Encriptacion que usa la misma clave para cifrar y descifrar'},
+        2: {'term': '256', 'definition': 'Longitud de clave mas segura en bits (128, 192 o 256)'},
+        3: {'term': 'KEY', 'definition': 'Clave secreta necesaria para cifrar/descifrar datos'},
+        4: {'term': 'CIPHER', 'definition': 'Texto cifrado resultante del proceso de encriptacion'},
+    },
 }
 
 level_puzzles = {
@@ -1488,7 +1505,7 @@ level_puzzles = {
         is_sequence=True
     ),
     'level_3': CyberPuzzle(
-        650, 380, 'terminal',
+        400, 350, 'terminal',
         'AES,SYMMETRIC,256,KEY,CIPHER',
         'SISTEMA DE ENCRIPTACION AES:\n1.Algoritmo estandar (3 letras)?\n2.Tipo de encriptacion (usa misma clave)?\n3.Bits de clave mas segura?\n4.Dato secreto para cifrar?\n5.Texto encriptado resultante?',
         hints=['Advanced Encryption Standard', 'Symmetric vs Asymmetric', 'Opciones: 128, 192, 256', 'Secret Key', 'Ciphertext'],
@@ -1507,7 +1524,7 @@ level_puzzles = {
 level_packet_games = {
     'level_1': PacketFilteringGame(500, 165),
     'level_2': PacketFilteringGame(350, 300),
-    'level_3': PacketFilteringGame(500, 400),
+    'level_3': PacketFilteringGame(350, 350),
     'level_4': PacketFilteringGame(450, 220),
 }
 
@@ -2215,14 +2232,15 @@ while True:
                         puzzle_input_active = False
                         puzzle_user_input = ""
                     elif len(puzzle_user_input) < 20:
-                        char = event.unicode
-                        if char and (char.isalnum() or char in ' '):
-                            clean_char = ''.join(c for c in char if c.isprintable())
-                            if clean_char:
-                                puzzle_user_input += clean_char.upper()
-                except Exception as e:
-                    puzzle_user_input = ""
-                    player_message = [120, 'Error de entrada', '']
+                        try:
+                            char = event.unicode if hasattr(event, 'unicode') else ''
+                            if char and len(char) == 1:
+                                if char.isalnum() or char == ' ':
+                                    puzzle_user_input += char.upper()
+                        except (AttributeError, TypeError, UnicodeDecodeError):
+                            pass
+                except Exception:
+                    pass
             
             if event.key == K_e and not puzzle_input_active:
                 for npc in npcs:
@@ -2397,7 +2415,8 @@ while True:
 
     if level_name == 'level_2':
         last = events['lv2timer']
-        events['lv2timer'] += dt
+        if not puzzle_input_active:
+            events['lv2timer'] += dt
         if events['lv2timer'] < 6:
             player_message = [420, 'Preparate para el desafio...', '']
         if (last < 920) and (events['lv2timer'] >= 920):
@@ -2407,7 +2426,7 @@ while True:
             reset = True
         if (last < 2750) and (events['lv2timer'] >= 2750):
             reset = True
-        if (3200 < events['lv2timer'] < 3500):
+        if (3200 < events['lv2timer'] < 3500) and not puzzle_input_active:
             if (events['lv2timer'] % 350 < last % 350) or (events['lv2timer'] % 180 < last % 180):
                 dir = random.choice([-1, 1])
                 offset = random.randint(0, 20) / 20
@@ -2432,72 +2451,73 @@ while True:
     
     if level_name == 'level_3':
         last = events['lv3timer']
-        events['lv3timer'] += dt
+        if not puzzle_input_active:
+            events['lv3timer'] += dt
         if events['lv3timer'] < 6:
             player_message = [200, CYBER_MESSAGES['threat'], '']
-        if (200 < events['lv3timer'] < 800):
+        if (200 < events['lv3timer'] < 800) and not puzzle_input_active:
             eye_target_height = 30
-            if random.randint(0, 70) == 0:
+            if random.randint(0, 120) == 0:
                 play_sound('eye_shoot_large')
-                for i in range(5):
-                    speed = random.randint(30, 40) / 10
+                for i in range(3):
+                    speed = random.randint(25, 35) / 10
                     angle = eye_angle + random.random() * math.pi / 4 - math.pi / 8
                     vel = [math.cos(angle) * speed, math.sin(angle) * speed]
                     spawn = eye_base.copy()
                     for j in range(3):
                         sparks.append([spawn.copy(), angle + math.radians(random.randint(0, 80) - 40), 4 + random.randint(0, 30) / 10, 10, CYBER_COLORS['danger']])
                     projectiles.append([spawn, vel, 'enemy'])
-        elif (1300 < events['lv3timer'] < 1800):
+        elif (1300 < events['lv3timer'] < 1800) and not puzzle_input_active:
             eye_target_height = 30
-            if random.randint(0, 90) == 0:
+            if random.randint(0, 150) == 0:
                 play_sound('eye_shoot_large')
                 offset = random.random() * math.pi * 2
-                for i in range(36):
-                    speed = 3.5
-                    angle = math.pi * 2 * i / 36 + offset
+                for i in range(18):
+                    speed = 2.5
+                    angle = math.pi * 2 * i / 18 + offset
                     vel = [math.cos(angle) * speed, math.sin(angle) * speed]
                     spawn = eye_base.copy()
                     for j in range(3):
                         sparks.append([spawn.copy(), angle + math.radians(random.randint(0, 80) - 40), 4 + random.randint(0, 30) / 10, 10, CYBER_COLORS['danger']])
                     projectiles.append([spawn, vel, 'enemy'])
-        elif (2500 < events['lv3timer'] < 3100):
+        elif (2500 < events['lv3timer'] < 3100) and not puzzle_input_active:
             eye_target_height = 38
-            if game_time % 10 == 0:
+            if game_time % 18 == 0:
                 play_sound('eye_shoot')
                 offset = game_time / 600 * math.pi * 2
-                for i in range(6):
-                    speed = 3.5
-                    angle = math.pi * 2 * i / 6 + offset
+                for i in range(4):
+                    speed = 2.5
+                    angle = math.pi * 2 * i / 4 + offset
                     vel = [math.cos(angle) * speed, math.sin(angle) * speed]
                     spawn = eye_base.copy()
                     for j in range(3):
                         sparks.append([spawn.copy(), angle + math.radians(random.randint(0, 80) - 40), 7 + random.randint(0, 30) / 10, 5, CYBER_COLORS['danger']])
                     projectiles.append([spawn, vel, 'enemy'])
-        elif (3600 < events['lv3timer'] < 4500):
+        elif (3600 < events['lv3timer'] < 4500) and not puzzle_input_active:
             eye_target_height = 38
-            if game_time % 17 == 0:
+            if game_time % 25 == 0:
                 play_sound('eye_shoot')
                 for j in range(2):
                     if j == 0:
                         offset = game_time / 600 * math.pi * 2
                     else:
                         offset = -game_time / 600 * math.pi * 2
-                    for i in range(6):
-                        speed = 3.5
-                        angle = math.pi * 2 * i / 6 + offset
+                    for i in range(4):
+                        speed = 2.5
+                        angle = math.pi * 2 * i / 4 + offset
                         vel = [math.cos(angle) * speed, math.sin(angle) * speed]
                         spawn = eye_base.copy()
                         for k in range(3):
                             sparks.append([spawn.copy(), angle + math.radians(random.randint(0, 80) - 40), 7 + random.randint(0, 30) / 10, 5, CYBER_COLORS['danger']])
                         projectiles.append([spawn, vel, 'enemy'])
-        elif (5200 < events['lv3timer'] < 5800):
+        elif (5200 < events['lv3timer'] < 5800) and not puzzle_input_active:
             eye_target_height = 30
-            if game_time % 3 == 0:
+            if game_time % 6 == 0:
                 play_sound('eye_shoot')
                 offset = game_time / 600 * math.pi * 2
-                for i in range(3):
-                    speed = 3.5
-                    angle = math.pi * 2 * i / 3 + offset
+                for i in range(2):
+                    speed = 2.5
+                    angle = math.pi * 2 * i / 2 + offset
                     vel = [math.cos(angle) * speed, math.sin(angle) * speed]
                     spawn = eye_base.copy()
                     for j in range(3):
@@ -2593,12 +2613,14 @@ while True:
     else:
         projectiles = projectiles[-500:]
 
-    if (events['lv1'] or level_name != 'level_1') and (not map_transition) and (events['lv3timer'] < 6300) and (level_name != 'level_4'):
+    if (events['lv1'] or level_name != 'level_1') and (not map_transition) and (events['lv3timer'] < 6300) and (level_name != 'level_4') and not puzzle_input_active:
         rate = 25
         if (level_name == 'level_2') and ((240 < events['lv2timer'] < 840) or (1200 < events['lv2timer'] < 1760) or (2000 < events['lv2timer'] < 2600)):
-            rate = 12
+            rate = 18
+        if (level_name == 'level_3'):
+            rate = 35
         if random.randint(0, rate) == 0:
-            vel = [random.randint(0, 20) / 10 - 1, 4]
+            vel = [random.randint(0, 20) / 10 - 1, 3]
             angle = math.atan2(vel[1], vel[0])
             spawn = [display.get_width() * random.random() + scroll[0], scroll[1]]
             for i in range(5):
@@ -2722,10 +2744,41 @@ while True:
     
     # UI de Puzzle
     if puzzle_input_active:
+        if current_puzzle and current_puzzle.is_sequence and level_name in PUZZLE_DEFINITIONS:
+            def_box_width = display.get_width() - 20
+            def_box_height = 70
+            def_box_x = 10
+            def_box_y = 25
+            
+            pygame.draw.rect(display, (5, 15, 30), (def_box_x, def_box_y, def_box_width, def_box_height))
+            pygame.draw.rect(display, CYBER_COLORS['primary_cyan'], (def_box_x, def_box_y, def_box_width, def_box_height), 2)
+            
+            title_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['primary_cyan'])
+            title_font.render('DEFINICIONES DE AYUDA:', display, (def_box_x + 5, def_box_y + 3))
+            
+            current_step = current_puzzle.current_step if hasattr(current_puzzle, 'current_step') else 0
+            defs = PUZZLE_DEFINITIONS[level_name]
+            
+            y_offset = def_box_y + 14
+            def_font = text.Font('data/fonts/small_font.png', (180, 220, 180))
+            term_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['warning'])
+            
+            for step_num, step_data in defs.items():
+                if step_num == current_step:
+                    term_font.render(f'>{step_num+1}. {step_data["term"]}:', display, (def_box_x + 5, y_offset))
+                    def_font.render(step_data['definition'][:50], display, (def_box_x + 55, y_offset))
+                else:
+                    dim_font = text.Font('data/fonts/small_font.png', (80, 100, 80))
+                    dim_font.render(f'{step_num+1}. {step_data["term"]}', display, (def_box_x + 5, y_offset))
+                y_offset += 10
+            
+            pause_font = text.Font('data/fonts/small_font.png', CYBER_COLORS['safe'])
+            pause_font.render('ATAQUES PAUSADOS', display, (def_box_x + def_box_width - 90, def_box_y + 3))
+        
         box_width = 200
         box_height = 30
         box_x = display.get_width() // 2 - box_width // 2
-        box_y = display.get_height() - 60
+        box_y = display.get_height() - 50
         
         pygame.draw.rect(display, (20, 40, 60), (box_x, box_y, box_width, box_height))
         pygame.draw.rect(display, CYBER_COLORS['primary_cyan'], (box_x, box_y, box_width, box_height), 2)
@@ -2737,8 +2790,8 @@ while True:
             cursor_x = box_x + 5 + font.width(puzzle_user_input)
             pygame.draw.rect(display, CYBER_COLORS['primary_green'], (cursor_x, box_y + 10, 2, 10))
         
-        hint_text = "Soy un sistema que vigila quien entra y quien sale en una red. Enter: Enviar - ESC: Cancelar"
-        font.render(hint_text, display, (display.get_width() // 2 - font.width(hint_text) // 2, box_y - 15))
+        hint_text = "Enter: Enviar - ESC: Cancelar"
+        font.render(hint_text, display, (display.get_width() // 2 - font.width(hint_text) // 2, box_y - 12))
 
     # HUD
     render_cyber_hud(player_mana, level_time)

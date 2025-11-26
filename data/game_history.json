@@ -294,5 +294,20 @@
       "level_2",
       "level_3"
     ]
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-26 16:03:55",
+    "duration_seconds": 855,
+    "duration_formatted": "14m 15s",
+    "threats_neutralized": 3310187,
+    "firewalls_collected": 10,
+    "breaches": 1,
+    "final_level": "level_4",
+    "levels_completed": [
+      "level_2",
+      "level_3",
+      "level_4"
+    ]
   }
 ]
