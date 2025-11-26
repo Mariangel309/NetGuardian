@@ -309,5 +309,46 @@
       "level_3",
       "level_4"
     ]
+  },
+  {
+    "player_name": "m",
+    "date": "2025-11-26 16:28:04",
+    "duration_seconds": 923,
+    "duration_formatted": "15m 23s",
+    "threats_neutralized": 2439546,
+    "firewalls_collected": 12,
+    "breaches": 2,
+    "final_level": "level_4",
+    "levels_completed": [
+      "level_2",
+      "level_3",
+      "level_4"
+    ]
+  },
+  {
+    "player_name": "Maria",
+    "date": "2025-11-26 16:35:10",
+    "duration_seconds": 413,
+    "duration_formatted": "6m 53s",
+    "threats_neutralized": 1822514,
+    "firewalls_collected": 10,
+    "breaches": 4,
+    "final_level": "level_4",
+    "levels_completed": [
+      "level_2",
+      "level_3",
+      "level_4"
+    ]
+  },
+  {
+    "player_name": "mi",
+    "date": "2025-11-26 16:48:41",
+    "duration_seconds": 3,
+    "duration_formatted": "3s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
   }
 ]

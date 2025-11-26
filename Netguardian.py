@@ -1476,18 +1476,26 @@ level_npcs = {
 
 PUZZLE_DEFINITIONS = {
     'level_2': {
-        0: {'term': 'DDOS', 'definition': 'Distributed Denial of Service - Ataque que satura un servidor con trafico masivo'},
-        1: {'term': 'BOTNET', 'definition': 'Red de computadoras infectadas controladas por un atacante'},
-        2: {'term': 'FLOOD', 'definition': 'Inundacion de paquetes (SYN Flood, UDP Flood) para saturar servicios'},
-        3: {'term': 'CDN', 'definition': 'Content Delivery Network - Distribuye contenido para reducir carga'},
+        0: {'term': 'DDOS', 'definition': 'Distributed Denial of Service - Ataque que satura un servidor'},
+        1: {'term': 'BOTNET', 'definition': 'Red de computadoras infectadas'},
+        2: {'term': 'FLOOD', 'definition': 'Inundacion de paquetes (SYN Flood, UDP Flood)'},
+        3: {'term': 'CDN', 'definition': 'Content Delivery Network - Distribuye contenido'},
         4: {'term': 'RATE LIMITING', 'definition': 'Tecnica que limita el numero de peticiones por tiempo'},
     },
     'level_3': {
         0: {'term': 'AES', 'definition': 'Advanced Encryption Standard - Algoritmo de cifrado simetrico'},
         1: {'term': 'SYMMETRIC', 'definition': 'Encriptacion que usa la misma clave para cifrar y descifrar'},
-        2: {'term': '256', 'definition': 'Longitud de clave mas segura en bits (128, 192 o 256)'},
+        2: {'term': '256', 'definition': 'Longitud de clave mas segura en bits'},
         3: {'term': 'KEY', 'definition': 'Clave secreta necesaria para cifrar/descifrar datos'},
-        4: {'term': 'CIPHER', 'definition': 'Texto cifrado resultante del proceso de encriptacion'},
+        4: {'term': 'CIPHER', 'definition': 'Texto cifrado resultante de encriptacion'},
+    },
+    'level_4': {
+        0: {'term': 'FIREWALL', 'definition': 'Primera barrera perimetral que filtra trafico no autorizado'},
+        1: {'term': 'IDS', 'definition': 'Detecta intentos de ataque en red'},
+        2: {'term': 'WAF', 'definition': 'Web Application Firewall - Protege aplicaciones web'},
+        3: {'term': 'ENCRYPT', 'definition': 'Proteccion de datos en transito'},
+        4: {'term': 'BACKUP', 'definition': 'Copia de seguridad para recuperacion ante desastres'},
+        5: {'term': 'MFA', 'definition': 'Multi-Factor Authentication'},
     },
 }
 
@@ -2555,7 +2563,7 @@ while True:
     if level_name == 'level_4':
         if level_time > 120:
             if not door:
-                door = (540, 220)
+                door = (280, 160)
                 ready_to_exit = True
                 player_message = [300, 'Nivel final - Completa los desafios!', '']
     
@@ -2746,9 +2754,9 @@ while True:
     if puzzle_input_active:
         if current_puzzle and current_puzzle.is_sequence and level_name in PUZZLE_DEFINITIONS:
             def_box_width = display.get_width() - 20
-            def_box_height = 70
+            def_box_height = 85 if level_name == 'level_4' else 70
             def_box_x = 10
-            def_box_y = 25
+            def_box_y = 15 if level_name == 'level_4' else 25
             
             pygame.draw.rect(display, (5, 15, 30), (def_box_x, def_box_y, def_box_width, def_box_height))
             pygame.draw.rect(display, CYBER_COLORS['primary_cyan'], (def_box_x, def_box_y, def_box_width, def_box_height), 2)
