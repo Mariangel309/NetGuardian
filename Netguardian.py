@@ -1466,7 +1466,7 @@ level_npcs = {
         ], 'server'),
     ],
     'level_4': [
-        NPC(400, 220, 'Firewall Omega', [
+        NPC(300, 160, 'Firewall Omega', [
             'Has llegado al nucleo del sistema.',
             'La seguridad en capas usa multiples defensas.',
             'Felicidades, Guardian. Red restaurada!'
@@ -1512,7 +1512,7 @@ level_puzzles = {
         is_sequence=True
     ),
     'level_4': CyberPuzzle(
-        500, 220, 'terminal',
+        350, 160, 'terminal',
         'FIREWALL,IDS,WAF,ENCRYPT,BACKUP,MFA',
         'DEFENSA EN CAPAS - Arquitectura completa:\n1.Primera barrera perimetral?\n2.Sistema de deteccion de intrusiones?\n3.Firewall de aplicaciones web?\n4.Proteccion de datos en transito?\n5.Recuperacion ante desastres?\n6.Autenticacion multifactor (siglas)?',
         hints=['Barrera de red', 'Intrusion Detection System', 'Web Application Firewall', 'Cifrado SSL/TLS', 'Copia de seguridad', 'Multi-Factor Authentication'],
@@ -1525,7 +1525,7 @@ level_packet_games = {
     'level_1': PacketFilteringGame(500, 165),
     'level_2': PacketFilteringGame(350, 300),
     'level_3': PacketFilteringGame(350, 350),
-    'level_4': PacketFilteringGame(450, 220),
+    'level_4': PacketFilteringGame(325, 160),
 }
 
 # Inicializar sistemas globales de ciberseguridad
