@@ -34,6 +34,9 @@ class Font():
         for char in text:
             if char == ' ':
                 text_width += self.space_width + self.base_spacing
+            elif char == '\n':
+                # Skip newline characters
+                pass
             else:
                 text_width += self.letter_spacing[self.font_order.index(char)] + self.base_spacing
         return text_width
@@ -48,7 +51,7 @@ class Font():
                 if char == ' ':
                     spaces.append((x, i))
                     x += self.space_width + self.base_spacing
-                else:
+                elif char != '\n' and char in self.font_order:
                     x += self.letter_spacing[self.font_order.index(char)] + self.base_spacing
             line_offset = 0
             for i, space in enumerate(spaces):

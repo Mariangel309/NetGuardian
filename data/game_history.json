@@ -1,0 +1,298 @@
+[
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 11:23:01",
+    "duration_seconds": 4,
+    "duration_formatted": "4s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "lini",
+    "date": "2025-11-20 12:15:06",
+    "duration_seconds": 332,
+    "duration_formatted": "5m 32s",
+    "threats_neutralized": 1195381,
+    "firewalls_collected": 12,
+    "breaches": 6,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "paty",
+    "date": "2025-11-20 12:28:00",
+    "duration_seconds": 3,
+    "duration_formatted": "3s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "paty",
+    "date": "2025-11-20 12:30:16",
+    "duration_seconds": 124,
+    "duration_formatted": "2m 4s",
+    "threats_neutralized": 410297,
+    "firewalls_collected": 5,
+    "breaches": 1,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "liana",
+    "date": "2025-11-20 12:31:29",
+    "duration_seconds": 3,
+    "duration_formatted": "3s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "liana",
+    "date": "2025-11-20 12:34:34",
+    "duration_seconds": 173,
+    "duration_formatted": "2m 53s",
+    "threats_neutralized": 928257,
+    "firewalls_collected": 6,
+    "breaches": 1,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "lia",
+    "date": "2025-11-20 12:49:41",
+    "duration_seconds": 187,
+    "duration_formatted": "3m 7s",
+    "threats_neutralized": 356563,
+    "firewalls_collected": 13,
+    "breaches": 5,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "miau",
+    "date": "2025-11-20 13:02:21",
+    "duration_seconds": 165,
+    "duration_formatted": "2m 45s",
+    "threats_neutralized": 506476,
+    "firewalls_collected": 11,
+    "breaches": 1,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "miau",
+    "date": "2025-11-20 14:06:41",
+    "duration_seconds": 87,
+    "duration_formatted": "1m 27s",
+    "threats_neutralized": 176245,
+    "firewalls_collected": 6,
+    "breaches": 0,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "ui",
+    "date": "2025-11-20 14:19:31",
+    "duration_seconds": 157,
+    "duration_formatted": "2m 37s",
+    "threats_neutralized": 196113,
+    "firewalls_collected": 10,
+    "breaches": 5,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:03:10",
+    "duration_seconds": 36,
+    "duration_formatted": "36s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:08:02",
+    "duration_seconds": 272,
+    "duration_formatted": "4m 32s",
+    "threats_neutralized": 108382,
+    "firewalls_collected": 0,
+    "breaches": 2,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "mia",
+    "date": "2025-11-20 16:16:22",
+    "duration_seconds": 2,
+    "duration_formatted": "2s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:19:42",
+    "duration_seconds": 161,
+    "duration_formatted": "2m 41s",
+    "threats_neutralized": 488654,
+    "firewalls_collected": 6,
+    "breaches": 2,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:32:28",
+    "duration_seconds": 3,
+    "duration_formatted": "3s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:34:16",
+    "duration_seconds": 94,
+    "duration_formatted": "1m 34s",
+    "threats_neutralized": 141508,
+    "firewalls_collected": 3,
+    "breaches": 2,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "mua",
+    "date": "2025-11-20 16:37:21",
+    "duration_seconds": 110,
+    "duration_formatted": "1m 50s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:37:50",
+    "duration_seconds": 5,
+    "duration_formatted": "5s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:38:12",
+    "duration_seconds": 7,
+    "duration_formatted": "7s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:38:52",
+    "duration_seconds": 2,
+    "duration_formatted": "2s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "maria",
+    "date": "2025-11-20 16:40:50",
+    "duration_seconds": 106,
+    "duration_formatted": "1m 46s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "mia",
+    "date": "2025-11-26 14:17:22",
+    "duration_seconds": 359,
+    "duration_formatted": "5m 59s",
+    "threats_neutralized": 1814147,
+    "firewalls_collected": 17,
+    "breaches": 9,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "mia",
+    "date": "2025-11-26 14:35:30",
+    "duration_seconds": 3,
+    "duration_formatted": "3s",
+    "threats_neutralized": 0,
+    "firewalls_collected": 0,
+    "breaches": 0,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "m",
+    "date": "2025-11-26 15:00:56",
+    "duration_seconds": 755,
+    "duration_formatted": "12m 35s",
+    "threats_neutralized": 1563488,
+    "firewalls_collected": 15,
+    "breaches": 29,
+    "final_level": "level_2",
+    "levels_completed": [
+      "level_2"
+    ]
+  },
+  {
+    "player_name": "m",
+    "date": "2025-11-26 15:18:04",
+    "duration_seconds": 892,
+    "duration_formatted": "14m 52s",
+    "threats_neutralized": 1841653,
+    "firewalls_collected": 36,
+    "breaches": 37,
+    "final_level": "level_3",
+    "levels_completed": [
+      "level_2",
+      "level_3"
+    ]
+  }
+]

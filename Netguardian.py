@@ -1442,15 +1442,15 @@ level_npcs = {
         ], 'server'),
     ],
     'level_2': [
-        NPC(280, 320, 'Firewall Beta', [
+        NPC(200, 300, 'Firewall Beta', [
             'Este sector sufre ataques de paquetes maliciosos.',
             'Los atacantes envian datos daninos a la red.',
             'Usa tu agilidad para esquivar las amenazas.'
         ], 'firewall'),
-        NPC(480, 340, 'Nodo de Inteligencia', [
+        NPC(680, 300, 'Nodo de Inteligencia', [
             'Los ataques DDoS saturan servicios con trafico.',
             'Las redes CDN y rate limiting ayudan a mitigar.',
-            'Resuelve el terminal para avanzar de forma segura.'
+            'Resuelve los terminales para avanzar de forma segura.'
         ], 'server'),
     ],
     'level_3': [
@@ -1481,7 +1481,7 @@ level_puzzles = {
         'Barrera que filtra trafico de red? (F_R_W_LL)'
     ),
     'level_2': CyberPuzzle(
-        580, 320, 'terminal',
+        420, 300, 'terminal',
         'DDOS,BOTNET,FLOOD,CDN,RATE LIMITING',
         'ATAQUES Y MITIGACION DDOS:\n1.Ataque de denegacion de servicio (4 letras)?\n2.Red de dispositivos comprometidos?\n3.Tipo de ataque que satura con peticiones?\n4.Red de distribucion de contenido (3 letras)?\n5.Tecnica que limita peticiones por tiempo?',
         hints=['Distributed Denial of Service', 'Red de bots infectados', 'SYN Flood, UDP Flood', 'Content Delivery Network', 'Rate Limiting'],
@@ -1506,7 +1506,7 @@ level_puzzles = {
 # ============= MINI-JUEGOS DE FILTRADO DE PAQUETES POR NIVEL =============
 level_packet_games = {
     'level_1': PacketFilteringGame(500, 165),
-    'level_2': PacketFilteringGame(420, 330),
+    'level_2': PacketFilteringGame(350, 300),
     'level_3': PacketFilteringGame(500, 400),
     'level_4': PacketFilteringGame(450, 220),
 }
@@ -2426,7 +2426,7 @@ while True:
         if (last < 3700) and (events['lv2timer'] >= 3700):
             reset = True
             player_message = [420, CYBER_MESSAGES['clear'], '']
-            door = (330, 372)
+            door = (280, 312)
             ready_to_exit = True
             play_sound('end_level')
     
