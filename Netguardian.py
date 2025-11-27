@@ -2773,8 +2773,13 @@ while True:
             
             for step_num, step_data in defs.items():
                 if step_num == current_step:
-                    term_font.render(f'>{step_num+1}. {step_data["term"]}:', display, (def_box_x + 5, y_offset))
-                    def_font.render(step_data['definition'][:50], display, (def_box_x + 55, y_offset))
+                    term_text = f'>{step_num+1}. {step_data["term"]}:'
+                    term_font.render(term_text, display, (def_box_x + 5, y_offset))
+
+                    # Cálculo automático del espacio necesario para evitar cruces
+                    definition_x = def_box_x + 5 + term_font.width(term_text) + 10
+                    def_font.render(step_data['definition'][:50], display, (definition_x, y_offset))
+
                 else:
                     dim_font = text.Font('data/fonts/small_font.png', (80, 100, 80))
                     dim_font.render(f'{step_num+1}. {step_data["term"]}', display, (def_box_x + 5, y_offset))

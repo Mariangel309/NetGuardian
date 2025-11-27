@@ -350,5 +350,55 @@
     "breaches": 0,
     "final_level": "level_1",
     "levels_completed": []
+  },
+  {
+    "player_name": "pp",
+    "date": "2025-11-26 19:51:34",
+    "duration_seconds": 1113,
+    "duration_formatted": "18m 33s",
+    "threats_neutralized": 4795694,
+    "firewalls_collected": 17,
+    "breaches": 22,
+    "final_level": "level_3",
+    "levels_completed": [
+      "level_2",
+      "level_3"
+    ]
+  },
+  {
+    "player_name": "ee",
+    "date": "2025-11-27 00:54:05",
+    "duration_seconds": 18,
+    "duration_formatted": "18s",
+    "threats_neutralized": 1617,
+    "firewalls_collected": 0,
+    "breaches": 1,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "er",
+    "date": "2025-11-27 00:54:38",
+    "duration_seconds": 16,
+    "duration_formatted": "16s",
+    "threats_neutralized": 3389,
+    "firewalls_collected": 0,
+    "breaches": 1,
+    "final_level": "level_1",
+    "levels_completed": []
+  },
+  {
+    "player_name": "ds",
+    "date": "2025-11-27 01:09:17",
+    "duration_seconds": 289,
+    "duration_formatted": "4m 49s",
+    "threats_neutralized": 1338316,
+    "firewalls_collected": 9,
+    "breaches": 2,
+    "final_level": "level_3",
+    "levels_completed": [
+      "level_2",
+      "level_3"
+    ]
   }
 ]
